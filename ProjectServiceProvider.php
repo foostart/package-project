@@ -1,6 +1,6 @@
 <?php
 
-namespace Foostart\Sample;
+namespace Foostart\Project;
 
 use Illuminate\Support\ServiceProvider;
 use LaravelAcl\Authentication\Classes\Menu\SentryMenuFactory;
@@ -9,7 +9,7 @@ use URL, Route;
 use Illuminate\Http\Request;
 
 
-class SampleServiceProvider extends ServiceProvider {
+class ProjectServiceProvider extends ServiceProvider {
 
     /**
      * Bootstrap the application services.
@@ -21,22 +21,22 @@ class SampleServiceProvider extends ServiceProvider {
          * Publish
          */
          $this->publishes([
-            __DIR__.'/config/sample_admin.php' => config_path('sample_admin.php'),
+            __DIR__.'/config/project_admin.php' => config_path('project_admin.php'),
         ],'config');
 
-        $this->loadViewsFrom(__DIR__ . '/views', 'sample');
+        $this->loadViewsFrom(__DIR__ . '/views', 'project');
 
 
         /**
          * Translations
          */
-         $this->loadTranslationsFrom(__DIR__.'/lang', 'sample');
+         $this->loadTranslationsFrom(__DIR__.'/lang', 'project');
 
 
         /**
          * Load view composer
          */
-        $this->sampleViewComposer($request);
+        $this->projectViewComposer($request);
 
          $this->publishes([
                 __DIR__.'/../database/migrations/' => database_path('migrations')
@@ -55,37 +55,37 @@ class SampleServiceProvider extends ServiceProvider {
         /**
          * Load controllers
          */
-        $this->app->make('Foostart\Sample\Controllers\Admin\SampleAdminController');
+        $this->app->make('Foostart\Project\Controllers\Admin\ProjectAdminController');
 
          /**
          * Load Views
          */
-        $this->loadViewsFrom(__DIR__ . '/views', 'sample');
+        $this->loadViewsFrom(__DIR__ . '/views', 'project');
     }
 
     /**
      *
      */
-    public function sampleViewComposer(Request $request) {
+    public function projectViewComposer(Request $request) {
 
-        view()->composer('sample::sample*', function ($view) {
+        view()->composer('project::project*', function ($view) {
             global $request;
-            $sample_id = $request->get('id');
-            $is_action = empty($sample_id)?'page_add':'page_edit';
+            $project_id = $request->get('id');
+            $is_action = empty($project_id)?'page_add':'page_edit';
 
             $view->with('sidebar_items', [
 
                 /**
-                 * Samples
+                 * Projects
                  */
                 //list
-                trans('sample::sample_admin.page_list') => [
-                    'url' => URL::route('admin_sample'),
+                trans('project::project_admin.page_list') => [
+                    'url' => URL::route('admin_project'),
                     "icon" => '<i class="fa fa-users"></i>'
                 ],
                 //add
-                trans('sample::sample_admin.'.$is_action) => [
-                    'url' => URL::route('admin_sample.edit'),
+                trans('project::project_admin.'.$is_action) => [
+                    'url' => URL::route('admin_project.edit'),
                     "icon" => '<i class="fa fa-users"></i>'
                 ],
 
@@ -93,8 +93,8 @@ class SampleServiceProvider extends ServiceProvider {
                  * Categories
                  */
                 //list
-                trans('sample::sample_admin.page_category_list') => [
-                    'url' => URL::route('admin_sample_category'),
+                trans('project::project_admin.page_category_list') => [
+                    'url' => URL::route('admin_project_category'),
                     "icon" => '<i class="fa fa-users"></i>'
                 ],
             ]);

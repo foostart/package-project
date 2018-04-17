@@ -1,7 +1,7 @@
 @extends('laravel-authentication-acl::admin.layouts.base-2cols')
 
 @section('title')
-Admin area: {{ trans('sample::sample_admin.page_edit') }}
+Admin area: {{ trans('project::project_admin.page_edit') }}
 @stop
 @section('content')
 <div class="row">
@@ -11,13 +11,13 @@ Admin area: {{ trans('sample::sample_admin.page_edit') }}
             <div class="panel panel-info">
                 <div class="panel-heading">
                     <h3 class="panel-title bariol-thin">
-                        {!! !empty($sample->sample_category_id) ? '<i class="fa fa-pencil"></i>'.trans('sample::sample_admin.form_edit') : '<i class="fa fa-users"></i>'.trans('sample::sample_admin.form_add') !!}
+                        {!! !empty($project->project_category_id) ? '<i class="fa fa-pencil"></i>'.trans('project::project_admin.form_edit') : '<i class="fa fa-users"></i>'.trans('project::project_admin.form_add') !!}
                     </h3>
                 </div>
                 <!-- ERRORS NAME  -->
                 {{-- model general errors from the form --}}
-                @if($errors->has('sample_category_name') )
-                    <div class="alert alert-danger">{!! $errors->first('sample_category_name') !!}</div>
+                @if($errors->has('project_category_name') )
+                    <div class="alert alert-danger">{!! $errors->first('project_category_name') !!}</div>
                 @endif
                 <!-- /END ERROR NAME -->
                 
@@ -36,20 +36,20 @@ Admin area: {{ trans('sample::sample_admin.page_edit') }}
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-12 col-xs-12">
-                            <!-- SAMPLE CATEGORIES ID -->
-                            <h4>{!! trans('sample::sample_admin.form_heading') !!}</h4>
-                            {!! Form::open(['route'=>['admin_sample_category.post', 'id' => @$sample->sample_category_id],  'files'=>true, 'method' => 'post'])  !!}
+                            <!-- project CATEGORIES ID -->
+                            <h4>{!! trans('project::project_admin.form_heading') !!}</h4>
+                            {!! Form::open(['route'=>['admin_project_category.post', 'id' => @$project->project_category_id],  'files'=>true, 'method' => 'post'])  !!}
 
-                            <!--END SAMPLE CATEGORIES ID  -->
+                            <!--END project CATEGORIES ID  -->
 
-                            <!-- SAMPLE NAME TEXT-->
-                            @include('sample::sample_category.elements.text', ['name' => 'sample_category_name'])
-                            <!-- /END SAMPLE NAME TEXT -->
+                            <!-- project NAME TEXT-->
+                            @include('project::project_category.elements.text', ['name' => 'project_category_name'])
+                            <!-- /END project NAME TEXT -->
                             
-                            {!! Form::hidden('id',@$sample->sample_category_id) !!}
+                            {!! Form::hidden('id',@$project->project_category_id) !!}
 
                             <!-- DELETE BUTTON -->
-                            <a href="{!! URL::route('admin_sample_category.delete',['id' => @$sample->id, '_token' => csrf_token()]) !!}"
+                            <a href="{!! URL::route('admin_project_category.delete',['id' => @$project->id, '_token' => csrf_token()]) !!}"
                                class="btn btn-danger pull-right margin-left-5 delete">
                                 Delete
                             </a>
@@ -67,7 +67,7 @@ Admin area: {{ trans('sample::sample_admin.page_edit') }}
         </div>
 
         <div class='col-md-4'>
-            @include('sample::sample.admin.sample_search')
+            @include('project::project.admin.project_search')
         </div>
 
     </div>

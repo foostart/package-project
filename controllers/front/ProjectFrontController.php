@@ -1,6 +1,6 @@
 <?php
 
-namespace Foostart\Sample\Controlers\Admin;
+namespace Foostart\Project\Controlers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 use URL,
     Route,
     Redirect;
-use Foostart\Sample\Models\Samples;
+use Foostart\Project\Models\Projects;
 
-class SampleFrontController extends Controller
+class ProjectFrontController extends Controller
 {
     public $data = array();
     public function __construct() {
@@ -20,13 +20,13 @@ class SampleFrontController extends Controller
     public function index(Request $request)
     {
 
-        $obj_sample = new Samples();
-        $samples = $obj_sample->get_samples();
+        $obj_project = new Projects();
+        $projects = $obj_project->get_projects();
         $this->data = array(
             'request' => $request,
-            'samples' => $samples
+            'projects' => $projects
         );
-        return view('sample::sample.index', $this->data);
+        return view('project::project.index', $this->data);
     }
 
 }

@@ -5,9 +5,9 @@ use Illuminate\Session\TokenMismatchException;
 /**
  * FRONT
  */
-Route::get('sample', [
-    'as' => 'sample',
-    'uses' => 'Foostart\Sample\Controllers\Front\SampleFrontController@index'
+Route::get('project', [
+    'as' => 'project',
+    'uses' => 'Foostart\Project\Controllers\Front\ProjectFrontController@index'
 ]);
 
 
@@ -19,41 +19,41 @@ Route::group(['middleware' => ['web']], function () {
     Route::group(['middleware' => ['admin_logged', 'can_see']], function () {
 
         ////////////////////////////////////////////////////////////////////////
-        ////////////////////////////SAMPLES ROUTE///////////////////////////////
+        ////////////////////////////PROJECTS ROUTE///////////////////////////////
         ////////////////////////////////////////////////////////////////////////
         /**
          * list
          */
-        Route::get('admin/sample/list', [
-            'as' => 'admin_sample',
-            'uses' => 'Foostart\Sample\Controllers\Admin\SampleAdminController@index'
+        Route::get('admin/project/list', [
+            'as' => 'admin_project',
+            'uses' => 'Foostart\Project\Controllers\Admin\ProjectAdminController@index'
         ]);
 
         /**
          * edit-add
          */
-        Route::get('admin/sample/edit', [
-            'as' => 'admin_sample.edit',
-            'uses' => 'Foostart\Sample\Controllers\Admin\SampleAdminController@edit'
+        Route::get('admin/project/edit', [
+            'as' => 'admin_project.edit',
+            'uses' => 'Foostart\Project\Controllers\Admin\ProjectAdminController@edit'
         ]);
 
         /**
          * post
          */
-        Route::post('admin/sample/edit', [
-            'as' => 'admin_sample.post',
-            'uses' => 'Foostart\Sample\Controllers\Admin\SampleAdminController@post'
+        Route::post('admin/project/edit', [
+            'as' => 'admin_project.post',
+            'uses' => 'Foostart\Project\Controllers\Admin\ProjectAdminController@post'
         ]);
 
         /**
          * delete
          */
-        Route::get('admin/sample/delete', [
-            'as' => 'admin_sample.delete',
-            'uses' => 'Foostart\Sample\Controllers\Admin\SampleAdminController@delete'
+        Route::get('admin/project/delete', [
+            'as' => 'admin_project.delete',
+            'uses' => 'Foostart\Project\Controllers\Admin\ProjectAdminController@delete'
         ]);
         ////////////////////////////////////////////////////////////////////////
-        ////////////////////////////SAMPLES ROUTE///////////////////////////////
+        ////////////////////////////PROJECTS ROUTE///////////////////////////////
         ////////////////////////////////////////////////////////////////////////
 
 
@@ -63,32 +63,32 @@ Route::group(['middleware' => ['web']], function () {
         ////////////////////////////////////////////////////////////////////////
         ////////////////////////////CATEGORIES///////////////////////////////
         ////////////////////////////////////////////////////////////////////////
-         Route::get('admin/sample_category', [
-            'as' => 'admin_sample_category',
-            'uses' => 'Foostart\Sample\Controllers\Admin\SampleCategoryAdminController@index'
+         Route::get('admin/project_category', [
+            'as' => 'admin_project_category',
+            'uses' => 'Foostart\Project\Controllers\Admin\ProjectCategoryAdminController@index'
         ]);
 
         /**
          * edit-add
          */
-        Route::get('admin/sample_category/edit', [
-            'as' => 'admin_sample_category.edit',
-            'uses' => 'Foostart\Sample\Controllers\Admin\SampleCategoryAdminController@edit'
+        Route::get('admin/project_category/edit', [
+            'as' => 'admin_project_category.edit',
+            'uses' => 'Foostart\Project\Controllers\Admin\ProjectCategoryAdminController@edit'
         ]);
 
         /**
          * post
          */
-        Route::post('admin/sample_category/edit', [
-            'as' => 'admin_sample_category.post',
-            'uses' => 'Foostart\Sample\Controllers\Admin\SampleCategoryAdminController@post'
+        Route::post('admin/project_category/edit', [
+            'as' => 'admin_project_category.post',
+            'uses' => 'Foostart\Project\Controllers\Admin\ProjectCategoryAdminController@post'
         ]);
          /**
          * delete
          */
-        Route::get('admin/sample_category/delete', [
-            'as' => 'admin_sample_category.delete',
-            'uses' => 'Foostart\Sample\Controllers\Admin\SampleCategoryAdminController@delete'
+        Route::get('admin/project_category/delete', [
+            'as' => 'admin_project_category.delete',
+            'uses' => 'Foostart\Project\Controllers\Admin\ProjectCategoryAdminController@delete'
         ]);
         ////////////////////////////////////////////////////////////////////////
         ////////////////////////////CATEGORIES///////////////////////////////
