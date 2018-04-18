@@ -79,12 +79,12 @@ class ProjectServiceProvider extends ServiceProvider {
                  * Projects
                  */
                 //list
-                trans('project::project_admin.page_list') => [
+                trans('project-admin.page.list') => [
                     'url' => URL::route('admin_project'),
                     "icon" => '<i class="fa fa-users"></i>'
                 ],
                 //add
-                trans('project::project_admin.'.$is_action) => [
+                trans('project-admin.'.$is_action) => [
                     'url' => URL::route('admin_project.edit'),
                     "icon" => '<i class="fa fa-users"></i>'
                 ],
@@ -93,7 +93,7 @@ class ProjectServiceProvider extends ServiceProvider {
                  * Categories
                  */
                 //list
-                trans('project::project_admin.page_category_list') => [
+                trans('project-admin.page.category-list') => [
                     'url' => URL::route('admin_project_category'),
                     "icon" => '<i class="fa fa-users"></i>'
                 ],

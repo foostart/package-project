@@ -3,10 +3,10 @@
 <table class="table table-hover">
     <thead>
         <tr>
-            <td style='width:5%'>{{ trans('project::project_admin.order') }}</td>
-            <th style='width:10%'>Project ID</th>
-            <th style='width:50%'>Project title</th>
-            <th style='width:20%'>{{ trans('project::project_admin.operations') }}</th>
+            <td style='width:5%'>{{ trans('project-admin.table.order') }}</td>
+            <th style='width:10%'>{{ trans('project-admin.table.id') }}</th>
+            <th style='width:50%'>{{ trans('project-admin.table.title') }}</th>
+            <th style='width:20%'>{{ trans('project-admin.table.operations') }}</th>
         </tr>
     </thead>
     <tbody>
@@ -33,7 +33,7 @@
 @else
  <span class="text-warning">
 	<h5>
-		{{ trans('project::project_admin.message_find_failed') }}
+		{{ trans('project-admin.message.find-failed') }}
 	</h5>
  </span>
 @endif

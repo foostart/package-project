@@ -1,7 +1,7 @@
 @extends('laravel-authentication-acl::admin.layouts.base-2cols')
 
 @section('title')
-Admin area: {{ trans('project::project_admin.page_category') }}
+Admin area: {{ trans('project-admin.page.category') }}
 @stop
 
 @section('content')
@@ -16,7 +16,7 @@ Admin area: {{ trans('project::project_admin.page_category') }}
                     <h3 class="panel-title bariol-thin">
                         <i class="fa fa-group"></i> 
                         {!! $request->all() ? 
-                            trans('project::project_admin.page_search') : trans('project::project_admin.page_category') 
+                            trans('project-admin.page.search') : trans('project-admin.page.category') 
                         !!}
                     </h3>
                 </div>

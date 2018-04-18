@@ -13,7 +13,7 @@ class ProjectsCategories extends Model {
     ];
     protected $primaryKey = 'project_category_id';
 
-    public function get_projects_categories($params = array()) {
+    public function get_project_categories($params = array()) {
         $eloquent = self::orderBy('project_category_id');
 
         if (!empty($params['project_category_name'])) {

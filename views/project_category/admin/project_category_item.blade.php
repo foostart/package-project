@@ -2,39 +2,39 @@
 <div class="row margin-bottom-12">
     <div class="col-md-12">
         <a href="{!! URL::route('admin_project_category.edit') !!}" class="btn btn-info pull-right">
-            <i class="fa fa-plus"></i>{{trans('project::project_admin.project_category_add_button')}}
+            <i class="fa fa-plus"></i>{{trans('project-admin.button.add-category')}}
         </a>
     </div>
 </div>
 <!--/END ADD PROJECT CATEGORY ITEM-->
 
-@if( ! $projects_categories->isEmpty() )
+@if( ! $project_categories->isEmpty() )
 <table class="table table-hover">
     <thead>
         <tr>
             <td style='width:5%'>
-                {{ trans('project::project_admin.order') }}
+                {{ trans('project-admin.table.order') }}
             </td>
 
             <th style='width:10%'>
-                {{ trans('project::project_admin.project_categoty_id') }}
+                {{ trans('project-admin.table.project-categoty-id') }}
             </th>
 
             <th style='width:50%'>
-                {{ trans('project::project_admin.project_categoty_name') }}
+                {{ trans('project-admin.form.project-category-name') }}
             </th>
 
             <th style='width:20%'>
-                {{ trans('project::project_admin.operations') }}
+                {{ trans('project-admin.table.operations') }}
             </th>
         </tr>
     </thead>
     <tbody>
         <?php
-            $nav = $projects_categories->toArray();
+            $nav = $project_categories->toArray();
             $counter = ($nav['current_page'] - 1) * $nav['per_page'] + 1;
         ?>
-        @foreach($projects_categories as $project_category)
+        @foreach($project_categories as $project_category)
         <tr>
             <!--COUNTER-->
             <td>
@@ -80,5 +80,5 @@
     <!-- /END FIND MESSAGE -->
 @endif
 <div class="paginator">
-    {!! $projects_categories->appends($request->except(['page']) )->render() !!}
+    {!! $project_categories->appends($request->except(['page']) )->render() !!}
 </div>

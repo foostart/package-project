@@ -11,7 +11,7 @@ Admin area: {{ trans('project::project_admin.page_edit') }}
             <div class="panel panel-info">
                 <div class="panel-heading">
                     <h3 class="panel-title bariol-thin">
-                        {!! !empty($project->project_category_id) ? '<i class="fa fa-pencil"></i>'.trans('project::project_admin.form_edit') : '<i class="fa fa-users"></i>'.trans('project::project_admin.form_add') !!}
+                        {!! !empty($project->project_category_id) ? '<i class="fa fa-pencil"></i>'.trans('project-admin.form.edit') : '<i class="fa fa-users"></i>'.trans('project-admin.form.add') !!}
                     </h3>
                 </div>
                 <!-- ERRORS NAME  -->
@@ -37,7 +37,7 @@ Admin area: {{ trans('project::project_admin.page_edit') }}
                     <div class="row">
                         <div class="col-md-12 col-xs-12">
                             <!-- project CATEGORIES ID -->
-                            <h4>{!! trans('project::project_admin.form_heading') !!}</h4>
+                            <h4>{!! trans('project-admin.form.heading') !!}</h4>
                             {!! Form::open(['route'=>['admin_project_category.post', 'id' => @$project->project_category_id],  'files'=>true, 'method' => 'post'])  !!}
 
                             <!--END project CATEGORIES ID  -->

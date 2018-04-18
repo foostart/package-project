@@ -11,7 +11,7 @@ Admin area: {{ trans('project::project_admin.page_edit') }}
             <div class="panel panel-info">
                 <div class="panel-heading">
                     <h3 class="panel-title bariol-thin">
-                        {!! !empty($project->project_id) ? '<i class="fa fa-pencil"></i>'.trans('project::project_admin.form_edit') : '<i class="fa fa-users"></i>'.trans('project::project_admin.form_add') !!}
+                    {!! !empty($project->project_category_id) ? '<i class="fa fa-pencil"></i>'.trans('project-admin.form.edit') : '<i class="fa fa-users"></i>'.trans('project-admin.form.add') !!}
                     </h3>
                 </div>
 
@@ -33,7 +33,7 @@ Admin area: {{ trans('project::project_admin.page_edit') }}
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-12 col-xs-12">
-                            <h4>{!! trans('project::project_admin.form_heading') !!}</h4>
+                        <h4>{!! trans('project-admin.form.heading') !!}</h4>
                             {!! Form::open(['route'=>['admin_project.post', 'id' => @$project->project_id],  'files'=>true, 'method' => 'post'])  !!}
 
 
@@ -41,12 +41,12 @@ Admin area: {{ trans('project::project_admin.page_edit') }}
                             <ul class="nav nav-tabs">
                                 <li class="active">
                                     <a data-toggle="tab" href="#home">
-                                        {!! trans('project::project_admin.tab_overview') !!}
+                                        {!! trans('project-admin.tab.overview') !!}
                                     </a>
                                 </li>
                                 <li>
                                     <a data-toggle="tab" href="#menu1">
-                                        {!! trans('project::project_admin.tab_attributes') !!}
+                                        {!! trans('project-admin.tab.attributes') !!}
                                     </a>
                                 </li>
                             </ul>

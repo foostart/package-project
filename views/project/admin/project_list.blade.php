@@ -1,7 +1,7 @@
 @extends('laravel-authentication-acl::admin.layouts.base-2cols')
 
 @section('title')
-Admin area: {{ trans('project::project_admin.page_list') }}
+Admin area: {{ trans('project-admin.page.list') }}
 @stop
 
 @section('content')
@@ -13,7 +13,7 @@ Admin area: {{ trans('project::project_admin.page_list') }}
             <div class="panel panel-info">
 
                 <div class="panel-heading">
-                    <h3 class="panel-title bariol-thin"><i class="fa fa-group"></i> {!! $request->all() ? trans('project::project_admin.page_search') : trans('project::project_admin.page_list') !!}</h3>
+                    <h3 class="panel-title bariol-thin"><i class="fa fa-group"></i> {!! $request->all() ? trans('project-admin.page.search') : trans('project-admin.page.list') !!}</h3>
                 </div>
                 
                 <!--MESSAGE-->
@@ -45,7 +45,7 @@ Admin area: {{ trans('project::project_admin.page_list') }}
 @section('footer_scripts')
 <script>
     $(".delete").click(function () {
-        return confirm("Are you sure to delete this item?");
+        return confirm({!! trans('project-admin.message.confirm-delete')!!});
     });
 </script>
 @stop

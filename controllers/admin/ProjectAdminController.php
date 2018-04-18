@@ -22,7 +22,7 @@ class ProjectAdminController extends Controller {
     private $obj_validator = NULL;
 
     public function __construct() {
-        $this->obj_project = new Project();
+        $this->obj_project = new Projects();
     }
 
     /**
@@ -33,7 +33,7 @@ class ProjectAdminController extends Controller {
 
         $params = $request->all();
 
-        $list_project= $this->obj_project->get_project($params);
+        $list_project= $this->obj_project->get_projects($params);
 
         $this->data_view = array_merge($this->data_view, array(
             'projects' => $list_project,

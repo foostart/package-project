@@ -1,7 +1,7 @@
 @extends('laravel-authentication-acl::admin.layouts.base-2cols')
 
 @section('title')
-    Admin area: {{ trans('project::project_admin.page_list') }}
+    Admin area: {{ trans('project-admin.page.list') }}
 @stop
 
 @section('content')
