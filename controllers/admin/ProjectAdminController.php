@@ -25,6 +25,7 @@ class ProjectAdminController extends FooController {
 
     public $obj_item = NULL;
     public $obj_category = NULL;
+    public $statuses = NULL;
 
     public function __construct() {
 
@@ -61,6 +62,7 @@ class ProjectAdminController extends FooController {
 
         // //set category
         $this->category_ref_name = 'admin/projects';
+        $this->statuses = config('package-project.status.list');
 
     }
 
@@ -80,6 +82,7 @@ class ProjectAdminController extends FooController {
             'items' => $items,
             'request' => $request,
             'params' => $params,
+            'statuses' => $this->statuses,
         ));
 
         return view($this->page_views['admin']['items'], $this->data_view);
@@ -124,6 +127,7 @@ class ProjectAdminController extends FooController {
             'categories' => $categories,
             'request' => $request,
             'context' => $context,
+            'statuses' => $this->statuses,
         ));
         return view($this->page_views['admin']['edit'], $this->data_view);
     }

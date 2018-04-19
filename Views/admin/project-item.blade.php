@@ -2,8 +2,9 @@
 <?php
     $withs = [
         'order' => '5%',
-        'name' => '40%',
-        'updated_at' => '40%',
+        'name' => '20%',
+        'updated_at' => '30%',
+        'status'    => '20%',
         'operations' => '10%',
         'delete' => '5%',
     ];
@@ -19,7 +20,7 @@
         {!! trans($plang_admin.'.descriptions.counters', ['number' => $nav['total']]) !!}
     @endif
 </caption>
-
+<div class="table-responsive">
 <table class="table table-hover">
 
     <thead>
@@ -49,6 +50,21 @@
             <?php $name = 'updated_at' ?>
 
             <th class="hidden-xs" style='width:{{ $withs['updated_at'] }}'>{!! trans($plang_admin.'.columns.updated_at') !!}
+                <a href='{!! $sorting["url"][$name] !!}' class='tb-id' data-order='asc'>
+                    @if($sorting['items'][$name] == 'asc')
+                        <i class="fa fa-sort-alpha-asc" aria-hidden="true"></i>
+                    @elseif($sorting['items'][$name] == 'desc')
+                        <i class="fa fa-sort-alpha-desc" aria-hidden="true"></i>
+                    @else
+                        <i class="fa fa-sort-desc" aria-hidden="true"></i>
+                    @endif
+                </a>
+            </th>
+
+            <!-- NAME -->
+            <?php $name = 'project_status' ?>
+
+            <th class="hidden-xs" style='width:{{ $withs['status'] }}'>{!! trans($plang_admin.'.columns.status') !!}
                 <a href='{!! $sorting["url"][$name] !!}' class='tb-id' data-order='asc'>
                     @if($sorting['items'][$name] == 'asc')
                         <i class="fa fa-sort-alpha-asc" aria-hidden="true"></i>
@@ -94,6 +110,17 @@
                 <!--UPDATED AT-->
                 <td> {!! $item->updated_at !!} </td>
 
+                <!--STATUS-->
+                <td style="text-align: center;">
+
+                    <?php $status = config('package-project.status'); ?>
+                    @if($item->project_status && (isset($status['list'][$item->project_status])))
+                        <i class="fa fa-circle" style="color:{!! $status['color'][$item->project_status] !!}" title='{!! $status["list"][$item->project_status] !!}'></i>
+                    @else
+                    <i class="fa fa-circle-o red" title='{!! trans($plang_admin.".labels.unknown") !!}'></i>
+                    @endif
+                </td>
+
                 <!--OPERATOR-->
                 <td>
                     <!--edit-->
@@ -138,6 +165,7 @@
     </tbody>
 
 </table>
+</div>
 <div class="paginator">
     {!! $items->appends($request->except(['page']) )->render() !!}
 </div>

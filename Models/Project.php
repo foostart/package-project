@@ -74,6 +74,10 @@ class Project extends FooModel {
                 'name' => 'files',
                 'type' => 'Json',
             ],
+            'project_status' => [
+                'name' => 'project_status',
+                'type' => 'Int',
+            ],
         ];
 
         //check valid fields for inserting
@@ -99,7 +103,7 @@ class Project extends FooModel {
         //check valid fields for filter
         $this->valid_filter_fields = [
             'keyword',
-            'status',
+            'project_status',
         ];
 
         //primary key
@@ -216,11 +220,11 @@ class Project extends FooModel {
                     }
                 }
             }
-        } elseif ($by_status) {
+        } /*elseif ($by_status) {
 
             $elo = $elo->where($this->table . '.'.$this->field_status, '=', $this->status['publish']);
 
-        }
+        }*/
 
         return $elo;
     }
@@ -262,17 +266,15 @@ class Project extends FooModel {
             $id = $params['id'];
         }
         $field_status = $this->field_status;
-
+       
         $project = $this->selectItem($params);
-
+ 
         if (!empty($project)) {
             $dataFields = $this->getDataFields($params, $this->fields);
 
             foreach ($dataFields as $key => $value) {
                 $project->$key = $value;
             }
-
-            $project->$field_status = $this->status['publish'];
 
             $project->save();
 
@@ -292,9 +294,7 @@ class Project extends FooModel {
 
         $dataFields = $this->getDataFields($params, $this->fields);
 
-        $dataFields[$this->field_status] = $this->status['publish'];
-
-
+ 
         $item = self::create($dataFields);
 
         $key = $this->primaryKey;
@@ -327,5 +327,14 @@ class Project extends FooModel {
 
         return FALSE;
     }
+
+    /**
+     * Get list of statuses to push to select
+     * @return ARRAY list of statuses
+     */
+    public function getPluckStatus() {
+        $pluck_status = config('package-project.status.list');
+        return $pluck_status;
+     }
 
 }

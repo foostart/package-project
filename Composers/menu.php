@@ -70,6 +70,7 @@ View::composer([
             'id' => trans($plang_admin.'.fields.id'),
             'project_name' => trans($plang_admin.'.fields.name'),
             'updated_at' => trans($plang_admin.'.fields.updated_at'),
+            'project_status'  => trans($plang_admin.'.fields.updated_at'),
         ];
         $sorting = [
             'label' => $orders,
