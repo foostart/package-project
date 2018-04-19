@@ -16,82 +16,96 @@ Route::get('project', [
  */
 Route::group(['middleware' => ['web']], function () {
 
-    Route::group(['middleware' => ['admin_logged', 'can_see']], function () {
+    Route::group(['middleware' => ['admin_logged', 'can_see', 'in_context'],
+                  'namespace' => 'Foostart\Project\Controllers\Admin',
+        ], function () {
 
-        ////////////////////////////////////////////////////////////////////////
-        ////////////////////////////PROJECTS ROUTE///////////////////////////////
-        ////////////////////////////////////////////////////////////////////////
+        /*
+          |-----------------------------------------------------------------------
+          | Manage project
+          |-----------------------------------------------------------------------
+          | 1. List of projects
+          | 2. Edit project
+          | 3. Delete project
+          | 4. Add new project
+          | 5. Manage configurations
+          | 6. Manage languages
+          |
+        */
+
         /**
          * list
          */
-        Route::get('admin/project/list', [
-            'as' => 'admin_project',
-            'uses' => 'Foostart\Project\Controllers\Admin\ProjectAdminController@index'
+        Route::get('admin/projects/list', [
+            'as' => 'projects.list',
+            'uses' => 'ProjectAdminController@index'
         ]);
 
         /**
          * edit-add
          */
-        Route::get('admin/project/edit', [
-            'as' => 'admin_project.edit',
-            'uses' => 'Foostart\Project\Controllers\Admin\ProjectAdminController@edit'
+        Route::get('admin/projects/edit', [
+            'as' => 'projects.edit',
+            'uses' => 'ProjectAdminController@edit'
+        ]);
+
+        /**
+         * copy
+         */
+        Route::get('admin/projects/copy', [
+            'as' => 'projects.copy',
+            'uses' => 'ProjectAdminController@copy'
         ]);
 
         /**
          * post
          */
-        Route::post('admin/project/edit', [
-            'as' => 'admin_project.post',
-            'uses' => 'Foostart\Project\Controllers\Admin\ProjectAdminController@post'
+        Route::post('admin/projects/edit', [
+            'as' => 'projects.post',
+            'uses' => 'ProjectAdminController@post'
         ]);
 
         /**
          * delete
          */
-        Route::get('admin/project/delete', [
-            'as' => 'admin_project.delete',
-            'uses' => 'Foostart\Project\Controllers\Admin\ProjectAdminController@delete'
-        ]);
-        ////////////////////////////////////////////////////////////////////////
-        ////////////////////////////PROJECTS ROUTE///////////////////////////////
-        ////////////////////////////////////////////////////////////////////////
-
-
-
-
-        
-        ////////////////////////////////////////////////////////////////////////
-        ////////////////////////////CATEGORIES///////////////////////////////
-        ////////////////////////////////////////////////////////////////////////
-         Route::get('admin/project_category', [
-            'as' => 'admin_project_category',
-            'uses' => 'Foostart\Project\Controllers\Admin\ProjectCategoryAdminController@index'
+        Route::get('admin/projects/delete', [
+            'as' => 'projects.delete',
+            'uses' => 'ProjectAdminController@delete'
         ]);
 
         /**
-         * edit-add
+         * trash
          */
-        Route::get('admin/project_category/edit', [
-            'as' => 'admin_project_category.edit',
-            'uses' => 'Foostart\Project\Controllers\Admin\ProjectCategoryAdminController@edit'
+         Route::get('admin/projects/trash', [
+            'as' => 'projects.trash',
+            'uses' => 'ProjectAdminController@trash'
         ]);
 
         /**
-         * post
-         */
-        Route::post('admin/project_category/edit', [
-            'as' => 'admin_project_category.post',
-            'uses' => 'Foostart\Project\Controllers\Admin\ProjectCategoryAdminController@post'
+         * configs
+        */
+        Route::get('admin/projects/config', [
+            'as' => 'projects.config',
+            'uses' => 'ProjectAdminController@config'
         ]);
-         /**
-         * delete
-         */
-        Route::get('admin/project_category/delete', [
-            'as' => 'admin_project_category.delete',
-            'uses' => 'Foostart\Project\Controllers\Admin\ProjectCategoryAdminController@delete'
+
+        Route::post('admin/projects/config', [
+            'as' => 'projects.config',
+            'uses' => 'ProjectAdminController@config'
         ]);
-        ////////////////////////////////////////////////////////////////////////
-        ////////////////////////////CATEGORIES///////////////////////////////
-        ////////////////////////////////////////////////////////////////////////
+
+        /**
+         * language
+        */
+        Route::get('admin/projects/lang', [
+            'as' => 'projects.lang',
+            'uses' => 'ProjectAdminController@lang'
+        ]);
+
+        Route::post('admin/projects/lang', [
+            'as' => 'projects.lang',
+            'uses' => 'ProjectAdminController@lang'
+        ]);
+
     });
 });

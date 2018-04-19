@@ -4,10 +4,9 @@ namespace Foostart\Project;
 
 use Illuminate\Support\ServiceProvider;
 use LaravelAcl\Authentication\Classes\Menu\SentryMenuFactory;
-
-use URL, Route;
+use URL,
+    Route;
 use Illuminate\Http\Request;
-
 
 class ProjectServiceProvider extends ServiceProvider {
 
@@ -17,30 +16,27 @@ class ProjectServiceProvider extends ServiceProvider {
      * @return void
      */
     public function boot(Request $request) {
-        /**
-         * Publish
-         */
-         $this->publishes([
-            __DIR__.'/config/project_admin.php' => config_path('project_admin.php'),
-        ],'config');
 
-        $this->loadViewsFrom(__DIR__ . '/views', 'project');
+        //generate context key
+//        $this->generateContextKey();
 
+        // load view
+        $this->loadViewsFrom(__DIR__ . '/Views', 'package-project');
 
-        /**
-         * Translations
-         */
-         $this->loadTranslationsFrom(__DIR__.'/lang', 'project');
+        // include view composers
+        require __DIR__ . "/composers.php";
 
+        // publish config
+        $this->publishConfig();
 
-        /**
-         * Load view composer
-         */
-        $this->projectViewComposer($request);
+        // publish lang
+        $this->publishLang();
 
-         $this->publishes([
-                __DIR__.'/../database/migrations/' => database_path('migrations')
-            ], 'migrations');
+        // publish views
+        $this->publishViews();
+
+        // publish assets
+        $this->publishAssets();
 
     }
 
@@ -51,55 +47,46 @@ class ProjectServiceProvider extends ServiceProvider {
      */
     public function register() {
         include __DIR__ . '/routes.php';
-
-        /**
-         * Load controllers
-         */
-        $this->app->make('Foostart\Project\Controllers\Admin\ProjectAdminController');
-
-         /**
-         * Load Views
-         */
-        $this->loadViewsFrom(__DIR__ . '/views', 'project');
     }
 
     /**
-     *
+     * Public config to system
+     * @source: vendor/foostart/package-project/config
+     * @destination: config/
      */
-    public function projectViewComposer(Request $request) {
+    protected function publishConfig() {
+        $this->publishes([
+            __DIR__ . '/config/package-project.php' => config_path('package-project.php'),
+                ], 'config');
+    }
 
-        view()->composer('project::project*', function ($view) {
-            global $request;
-            $project_id = $request->get('id');
-            $is_action = empty($project_id)?'page_add':'page_edit';
+    /**
+     * Public language to system
+     * @source: vendor/foostart/package-project/lang
+     * @destination: resources/lang
+     */
+    protected function publishLang() {
+        $this->publishes([
+            __DIR__ . '/lang' => base_path('resources/lang'),
+        ]);
+    }
 
-            $view->with('sidebar_items', [
+    /**
+     * Public view to system
+     * @source: vendor/foostart/package-project/Views
+     * @destination: resources/views/vendor/package-project
+     */
+    protected function publishViews() {
 
-                /**
-                 * Projects
-                 */
-                //list
-                trans('project-admin.page.list') => [
-                    'url' => URL::route('admin_project'),
-                    "icon" => '<i class="fa fa-users"></i>'
-                ],
-                //add
-                trans('project-admin.'.$is_action) => [
-                    'url' => URL::route('admin_project.edit'),
-                    "icon" => '<i class="fa fa-users"></i>'
-                ],
+        $this->publishes([
+            __DIR__ . '/Views' => base_path('resources/views/vendor/package-project'),
+        ]);
+    }
 
-                /**
-                 * Categories
-                 */
-                //list
-                trans('project-admin.page.category-list') => [
-                    'url' => URL::route('admin_project_category'),
-                    "icon" => '<i class="fa fa-users"></i>'
-                ],
-            ]);
-            //
-        });
+    protected function publishAssets() {
+        $this->publishes([
+            __DIR__ . '/public' => public_path('packages/foostart/package-project'),
+        ]);
     }
 
 }
