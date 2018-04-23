@@ -138,6 +138,7 @@ return [
         'config' => 'List of configurations',
         'lang' => 'List of languages',
         'project-status' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
+        'member'    => 'Search member'
     ],
 
 
@@ -220,7 +221,7 @@ return [
         'menu-1' => 'Basic',
         'menu-2' => 'Advance',
         'menu-3' => 'Other',
-        'menu-4' => 'Menu 4',
+        'menu-4' => 'Assigner',
         'menu-5' => 'Menu 5',
         'menu-6' => 'Menu 6',
         'menu-7' => 'Menu 7',

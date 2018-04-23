@@ -43,6 +43,13 @@
                 {!! trans($plang_admin.'.tabs.menu-3') !!}
             </a>
         </li>
+
+        <!--MENU 4-->
+        <li>
+            <a data-toggle="tab" href="#menu_4">
+                {!! trans($plang_admin.'.tabs.menu-4') !!}
+            </a>
+        </li>
     </ul>
     <!--/TAB MENU-->
 
@@ -136,6 +143,42 @@
             <!--/SAMPLE FILES-->
         </div>
 
+        <!--MENU 4-->
+        <div id="menu_4" class="tab-pane fade">
+            <!--SAMPLE OVERVIEW-->
+            @include('package-category::admin.partials.input_text', [
+            'name' => 'user_id_member',
+            'label' => trans($plang_admin.'.labels.member'),
+            'value' => @$item->user_id_member,
+            'id'    => 'search_member',
+            'description' => trans($plang_admin.'.descriptions.member'),
+            'tinymce' => false,
+            'errors' => $errors,
+            ])
+            <!--/SAMPLE OVERVIEW-->
+            <table class="table table-hover">
+                <thead>
+                    <tr>              
+                        <th>#</th>
+                        <th>Fisrt name</th>
+                        <th>Last name</th>
+                        <th class="text-center">Leader</th>
+                    </tr>
+                    <tr>              
+                        <th>1</th>
+                        <th>Dao</th>
+                        <th>Phuong</th>
+                        <th class="text-center">
+                            <div class="ckbox">
+                                <input id="rad_check" name="btSelectAll" type="radio">  
+                                <label for="rad_check"></label>  
+                            </div>
+                        </th>  
+                    </tr>
+                </thead>  
+            </table>
+        </div>
+
     </div>
     <!--/TAB CONTENT-->
 
@@ -150,3 +193,7 @@
 <!------------------------------------------------------------------------------
 | End list of elements in project form
 |------------------------------------------------------------------------------>
+@section('footer_scripts')
+    @parent
+    {!! HTML::script('packages/foostart/package-project/js/project.js')  !!}
+@stop
