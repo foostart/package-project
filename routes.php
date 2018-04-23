@@ -106,6 +106,14 @@ Route::group(['middleware' => ['web']], function () {
             'as' => 'projects.lang',
             'uses' => 'ProjectAdminController@lang'
         ]);
+        
+        /**
+         * search
+        */
+        Route::get('admin/projects/search', [
+            'as' => 'projects.search',
+            'uses' => 'ProjectAdminController@search'
+        ]);
 
     });
 });

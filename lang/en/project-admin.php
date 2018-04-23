@@ -138,7 +138,7 @@ return [
         'config' => 'List of configurations',
         'lang' => 'List of languages',
         'project-status' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
-        'member'    => 'Search member'
+        'member'    => 'Search member',
     ],
 
 
@@ -176,7 +176,10 @@ return [
         'description' => 'Project Description',
         'overview' => 'Project Overview',
         'slug' => 'Slug',
-        'updated_at' => 'Updated at'
+        'updated_at' => 'Updated at',
+        'user-id'   => 'ID',
+        'last-name' => 'Last name',
+        'last-name'    => 'First name',
     ],
 
 
@@ -202,6 +205,9 @@ return [
         'title-backup' => 'Backups',
         'config' => 'Configurations',
         'project-status'    => 'Status',
+        'member'        => 'Add members',
+        'search'        => 'Search User Data',
+        'total-data'    => 'Total Data :',
     ],
 
 

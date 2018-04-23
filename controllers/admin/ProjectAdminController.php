@@ -19,6 +19,7 @@ use Foostart\Category\Library\Controllers\FooController;
 use Foostart\Project\Models\Project;
 use Foostart\Category\Models\Category;
 use Foostart\Project\Validators\ProjectValidator;
+use Illuminate\Support\Facades\DB;
 
 
 class ProjectAdminController extends FooController {
@@ -396,5 +397,52 @@ class ProjectAdminController extends FooController {
         return view($this->page_views['admin']['edit'], $this->data_view);
     }
 
+    /**
+     * Search user by name
+     * @return view edit page
+     * @date 23/04/2018
+     */
+    public function search(Request $request){
+        if($request->ajax())
+        {
+            $output = '';
+            $query = $request->get('query');
+            if($query != '')
+            {
+            $data = DB::table('user_profile')
+                ->where('last_name', 'like', '%'.$query.'%')
+                ->orWhere('first_name', 'like', '%'.$query.'%')
+                ->get();    
+            }
+            $total_row = $data->count();
+            if($total_row > 0)
+            {
+                foreach($data as $row)
+                {
+                    $output .= '
+                    <tr>
+                    <td>'.$row->id.'</td>
+                    <td>'.$row->first_name.'</td>
+                    <td>'.$row->last_name.'</td>
+                    </tr>
+                    ';
+                }
+            }else
+            {
+                $output = '
+                <tr>
+                    <td align="center" colspan="5">No Data Found</td>
+                </tr>
+                ';
+            }
+            $data = array(
+                'table_data'  => $output,
+                'total_data'  => $total_row
+               );
+         
+            echo json_encode($data);
+                
+        }  
+    } 
 
 }

@@ -34,6 +34,7 @@ class Project extends FooModel {
             'project_image',
             'project_files',
             'project_status',
+            'user_id_member',
         ];
 
         //list of fields for inserting
@@ -78,6 +79,10 @@ class Project extends FooModel {
                 'name' => 'project_status',
                 'type' => 'Int',
             ],
+            'user_id_member' => [
+                'name' => 'user_id_member',
+                'type' => 'Json',
+            ],
         ];
 
         //check valid fields for inserting
@@ -92,6 +97,7 @@ class Project extends FooModel {
             'project_image',
             'project_files',
             'project_status',
+            'user_id_member',
         ];
 
         //check valid fields for ordering
