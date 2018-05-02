@@ -421,9 +421,15 @@ class ProjectAdminController extends FooController {
                 {
                     $output .= '
                     <tr>
-                    <td>'.$row->id.'</td>
-                    <td>'.$row->first_name.'</td>
-                    <td>'.$row->last_name.'</td>
+                        <td>'.$row->id.'</td>
+                        <td>'.$row->first_name.'</td>
+                        <td>'.$row->last_name.'</td>
+                        <td> 
+                            <div class="ckbox">
+                            <input id="cb_check" name="btSelect" type="checkbox">  
+                            <label for="cb_check"></label>  
+                            </div>
+                        </td>
                     </tr>
                     ';
                 }

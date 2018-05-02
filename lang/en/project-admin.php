@@ -179,7 +179,9 @@ return [
         'updated_at' => 'Updated at',
         'user-id'   => 'ID',
         'last-name' => 'Last name',
-        'last-name'    => 'First name',
+        'first-name'    => 'First name',
+        'choose'        => 'Choose',
+        'member'        => 'List member:',
     ],
 
 

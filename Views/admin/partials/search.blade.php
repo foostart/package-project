@@ -20,12 +20,26 @@
          <th>{!! trans('project-admin.fields.user-id') !!}</th>
          <th>{!! trans('project-admin.fields.first-name') !!}</th>
          <th>{!! trans('project-admin.fields.last-name') !!}</th>
+         <th>{!! trans('project-admin.fields.choose') !!}</th>
         </tr>
        </thead>
        <tbody>
 
        </tbody>
       </table>
+      <h3 align="center">{!! trans('project-admin.fields.member') !!}<span id="total_records"></span></h3>
+        <table class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th>{!! trans('project-admin.fields.user-id') !!}</th>
+                <th>{!! trans('project-admin.fields.first-name') !!}</th>
+                <th>{!! trans('project-admin.fields.last-name') !!}</th>
+            </tr>
+            </thead>
+            <div class="result">
+
+            </div>
+        </table>
      </div>
     </div>    
    </div>
@@ -35,9 +49,9 @@
 <script>
 $(document).ready(function(){
 
- fetch_customer_data();
+ fetch_member_data();
 
- function fetch_customer_data(query = '')
+ function fetch_member_data(query = '')
  {
   $.ajax({
    url:"{{ route('projects.search') }}",
@@ -54,7 +68,7 @@ $(document).ready(function(){
 
  $(document).on('keyup', '#search', function(){
   var query = $(this).val();
-  fetch_customer_data(query);
+  fetch_member_data(query);
  });
 });
 </script>
