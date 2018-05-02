@@ -19,8 +19,7 @@ use Foostart\Category\Library\Controllers\FooController;
 use Foostart\Project\Models\Project;
 use Foostart\Category\Models\Category;
 use Foostart\Project\Validators\ProjectValidator;
-use Illuminate\Support\Facades\DB;
-
+use Foostart\Project\Repositories\SearchUserRepository;
 
 class ProjectAdminController extends FooController {
 
@@ -405,50 +404,17 @@ class ProjectAdminController extends FooController {
     public function search(Request $request){
         if($request->ajax())
         {
-            $output = '';
             $query = $request->get('query');
-            if($query != '')
-            {
-            $data = DB::table('user_profile')
-                ->where('last_name', 'like', '%'.$query.'%')
-                ->orWhere('first_name', 'like', '%'.$query.'%')
-                ->get();    
-            }
-            $total_row = $data->count();
-            if($total_row > 0)
-            {
-                foreach($data as $row)
-                {
-                    $output .= '
-                    <tr>
-                        <td>'.$row->id.'</td>
-                        <td>'.$row->first_name.'</td>
-                        <td>'.$row->last_name.'</td>
-                        <td> 
-                            <div class="ckbox">
-                            <input id="cb_check" name="btSelect" type="checkbox">  
-                            <label for="cb_check"></label>  
-                            </div>
-                        </td>
-                    </tr>
-                    ';
-                }
-            }else
-            {
-                $output = '
-                <tr>
-                    <td align="center" colspan="5">No Data Found</td>
-                </tr>
-                ';
-            }
-            $data = array(
-                'table_data'  => $output,
-                'total_data'  => $total_row
-               );
-         
-            echo json_encode($data);
-                
-        }  
+            
+            // retrive data
+            $repo = new SearchUserRepository(); 
+            $data = $repo->ajaxSearch($query);
+        
+            // return data
+            return response()->json($data, 200); 
+            //var_dump($data);
+            //return response(json_encode($data));
+       }
     } 
 
 }

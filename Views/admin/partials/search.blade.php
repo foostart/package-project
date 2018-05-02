@@ -27,19 +27,6 @@
 
        </tbody>
       </table>
-      <h3 align="center">{!! trans('project-admin.fields.member') !!}<span id="total_records"></span></h3>
-        <table class="table table-striped table-bordered">
-            <thead>
-            <tr>
-                <th>{!! trans('project-admin.fields.user-id') !!}</th>
-                <th>{!! trans('project-admin.fields.first-name') !!}</th>
-                <th>{!! trans('project-admin.fields.last-name') !!}</th>
-            </tr>
-            </thead>
-            <div class="result">
-
-            </div>
-        </table>
      </div>
     </div>    
    </div>
@@ -60,8 +47,23 @@ $(document).ready(function(){
    dataType:'json',
    success:function(data)
    {
-    $('tbody').html(data.table_data);
+    $('tbody').html('');
     $('#total_records').text(data.total_data);
+
+    var html = "";
+    for (var i = 0; i < data.data.length; i++)
+    {
+      var item = data.data[i];
+      html += 
+      "<tr>"+
+        "<td>"+item.user_id+"</td>"+
+        "<td>"+item.first_name+"</td>"+
+        "<td>"+item.last_name+"</td>"+
+        "<td><input type='checkbox' id='chkbox' name ='chkbox'/></td>"+
+      "</tr>";
+    }
+
+    $('tbody').html(html);
    }
   })
  }
