@@ -72,16 +72,29 @@
 
 
 @section('footer_scripts')
-    <!-- DELETE CONFIRM -->
-    <script>
+   <!-- DELETE CONFIRM -->
+   <script>
         $(".delete").click(function () {
             return confirm("{!! trans($plang_admin.'.confirms.delete') !!}");
         });
-        $("#selecctall").change(function () {
-            $("input:checkbox").prop('checked', $(this).prop("checked"));
-            document.getElementsByClassName('del-trash').style.display = 'block';
-            document.getElementsByClassName('del-forever').style.display = 'block';
+        $(document).ready(function(){
+            $("#selecctall").click(function(){
+                if($(this).is(":checked") == true)
+                    $(".btn-del").show();
+            else
+                    $(".btn-del").hide();
+                $(".ckbox").click();
+            });
+            $(".ckbox").click(function(){
+                if($(this).is(":checked") == true)
+                    $(".btn-del").show();
+                else
+                    $(".btn-del").hide();
+            });
         });
+        $("#selecctall").change(function (){
+            $("input:checkbox").prop('checked', $(this).prop("checked"));      
+    });
     </script>
     <!-- /END DELETE CONFIRM -->
 @stop

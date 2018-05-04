@@ -129,8 +129,8 @@ View::composer([
 
         //Order by
         $order_by = [
-            'asc' => trans('foostart.order_by.asc'),
-            'desc' => trans('foostart.order_by.desc'),
+            'asc' => trans('project-admin.oder-by.asc'),
+            'desc' => trans('project-admin.oder-by.desc'),
         ];
         $view->with('order_by', $order_by);
 });

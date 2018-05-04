@@ -139,6 +139,7 @@ return [
         'lang' => 'List of languages',
         'project-status' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
         'member'    => 'Search member',
+        'remove-member' => 'Click on member to remove',
     ],
 
 
@@ -298,5 +299,24 @@ return [
         'edit-error' => 'Edit item failed',
         'delete-ok' => 'Delete item successfully',
         'delete-error' => 'Delete item failed',
+    ],
+
+
+
+
+    
+
+
+
+    /*
+    |-----------------------------------------------------------------------
+    | Oders
+    |-----------------------------------------------------------------------
+    | oder
+    |
+    */
+    'oder-by' => [
+        'asc' => 'ASC',
+        'desc' => 'DESC',
     ],
 ];
