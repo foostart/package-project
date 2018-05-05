@@ -3,7 +3,7 @@
 use Foostart\Category\Library\Models\FooModel;
 use Illuminate\Database\Eloquent\Model;
 
-class Project extends FooModel {
+class Project_member extends FooModel {
 
     /**
      * @table categories
@@ -20,106 +20,63 @@ class Project extends FooModel {
     public function setConfigs() {
 
         //table name
-        $this->table = 'projects';
+        $this->table = 'project_user';
 
         //list of field in table
         $this->fillable = [
-            'project_name',
-            'category_id',
+            'project_id',
             'user_id',
-            'user_full_name',
-            'user_email',
-            'project_overview',
-            'project_description',
-            'project_image',
-            'project_files',
-            'project_status',
-            'leader',
         ];
 
         //list of fields for inserting
         $this->fields = [
-            'project_name' => [
-                'name' => 'project_name',
-                'type' => 'Text',
-            ],
-            'category_id' => [
-                'name' => 'category_id',
+            'project_id' => [
+                'name' => 'project_id',
                 'type' => 'Int',
             ],
             'user_id' => [
                 'name' => 'user_id',
                 'type' => 'Int',
-            ],
-            'user_full_name' => [
-                'name' => 'user_full_name',
-                'type' => 'Text',
-            ],
-            'user_email' => [
-                'name' => 'email',
-                'type' => 'Text',
-            ],
-            'project_overview' => [
-                'name' => 'project_overview',
-                'type' => 'Text',
-            ],
-            'project_description' => [
-                'name' => 'project_description',
-                'type' => 'Text',
-            ],
-            'project_image' => [
-                'name' => 'project_image',
-                'type' => 'Text',
-            ],
-            'project_files' => [
-                'name' => 'files',
-                'type' => 'Json',
-            ],
-            'project_status' => [
-                'name' => 'project_status',
-                'type' => 'Int',
-            ],
-            'leader' => [
-                'name' => 'leader',
-                'type' => 'Int',
-            ],
+            ], 
         ];
 
         //check valid fields for inserting
-        $this->valid_insert_fields = [
-            'project_name',
-            'user_id',
-            'category_id',
-            'user_full_name',
-            'updated_at',
-            'project_overview',
-            'project_description',
-            'project_image',
-            'project_files',
-            'project_status',
-            'leader',
-        ];
+        // $this->valid_insert_fields = [
+        //     'project_name',
+        //     'user_id',
+        //     'category_id',
+        //     'user_full_name',
+        //     'updated_at',
+        //     'project_overview',
+        //     'project_description',
+        //     'project_image',
+        //     'project_files',
+        //     'project_status',
+        //     'leader',
+        // ];
 
         //check valid fields for ordering
-        $this->valid_ordering_fields = [
-            'project_name',
-            'updated_at',
-            $this->field_status,
-        ];
-        //check valid fields for filter
-        $this->valid_filter_fields = [
-            'keyword',
-            'project_status',
-        ];
+        // $this->valid_ordering_fields = [
+        //     'project_name',
+        //     'updated_at',
+        //     $this->field_status,
+        // ];
+        // //check valid fields for filter
+        // $this->valid_filter_fields = [
+        //     'keyword',
+        //     'project_status',
+        // ];
 
         //primary key
-        $this->primaryKey = 'project_id';
+        $this->primaryKey = 'id';
 
         //the number of items on page
         $this->perPage = 10;
 
         //item status
-        $this->field_status = 'project_status';
+        // $this->field_status = 'project_status';
+
+        $this->timestamps = false;
 
     }
 
@@ -202,23 +159,14 @@ class Project extends FooModel {
                 {
                     switch($column)
                     {
-                        case 'project_name':
+                        case 'project_id':
                             if (!empty($value)) {
-                                $elo = $elo->where($this->table . '.project_name', '=', $value);
+                                $elo = $elo->where($this->table . '.project_id', '=', $value);
                             }
                             break;
-                        case 'status':
+                        case 'user_id':
                             if (!empty($value)) {
-                                $elo = $elo->where($this->table . '.'.$this->field_status, '=', $value);
-                            }
-                            break;
-                        case 'keyword':
-                            if (!empty($value)) {
-                                $elo = $elo->where(function($elo) use ($value) {
-                                    $elo->where($this->table . '.project_name', 'LIKE', "%{$value}%")
-                                    ->orWhere($this->table . '.project_description','LIKE', "%{$value}%")
-                                    ->orWhere($this->table . '.project_overview','LIKE', "%{$value}%");
-                                });
+                                $elo = $elo->where($this->table . 'user_id', '=', $value);
                             }
                             break;
                         default:
@@ -243,7 +191,7 @@ class Project extends FooModel {
     public function createSelect($elo) {
 
         $elo = $elo->select($this->table . '.*',
-                            $this->table . '.project_id as id'
+                            $this->table . '.id as id'
                 );
 
         return $elo;
@@ -309,6 +257,22 @@ class Project extends FooModel {
         return $item;
     }
 
+/**
+ * 
+ */
+    public function insertBulk($project_id, $arrUserID)
+    {
+        foreach ($arrUserID as $id)
+        {
+            $data = [
+                'user_id' => $id,
+                'project_id' => $project_id
+            ];
+
+            $this->insertItem($data);
+        }
+    }
+
 
     /**
      *
@@ -352,18 +316,4 @@ class Project extends FooModel {
         return $pluck_positions;
     }
 
-
-    /**
-     * Set leader
-     */
-    public function setProjectLeader($proj_id, $user_id)
-    {
-        $proj = Project::find($proj_id);
-
-        if ($proj != null)
-        {
-            $proj->leader = $user_id;
-            $proj->save();
-        }
-    }
 }

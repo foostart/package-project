@@ -10,10 +10,17 @@
     <div class="panel-heading">{!! trans('project-admin.labels.search') !!}</div>
     <div class="panel-body">
      <div class="form-group">
-      <input type="text" name="search" id="search" class="form-control" placeholder="{!! trans('project-admin.labels.member') !!}" />
+        @include('package-category::admin.partials.input_text', [
+            'name' => 'search_user',
+            'label' => trans('project-admin.labels.member'),
+            'description' => trans($plang_admin.'.descriptions.name'),
+            'errors' => $errors,
+            'id'  => 'search',
+          ])
      </div>
      <div class="table-responsive">
-      <h3 align="center">{!! trans('project-admin.labels.total-data') !!}<span id="total_records"></span></h3>
+      <!-- TABLE RESULT SEARCH -->
+      <h5 align="center">{!! trans('project-admin.labels.total-data') !!}<span id="total_records"></span></h5>
       <table class="table table-striped table-bordered" id="table-search">
        <thead>
         <tr>
@@ -33,14 +40,42 @@
           
        </tbody>
       </table>
-      {!! Form::hidden('user_id_member', '', ['id' => 'selectedMember']) !!}
-      <h3 id="a" align="center">{!! trans('project-admin.fields.member') !!}</h3>
-      <blockquote class="quote-card">
-          <p>{!! trans('project-admin.descriptions.remove-member') !!}</p>
-      </blockquote>
-      <ul id="listSelectMember">
-       
-      </ul>
+      <!-- END TABLE-->
+
+      <!-- TABLE RESULT SEARCH -->
+      <h5 align="center">List member</h5>
+            <table class="table table-striped table-bordered" id="table-member">
+            <thead>
+              <tr>
+              <th>{!! trans('project-admin.fields.user-id') !!}</th>
+              <th>user</th>
+              <th>leader</th>
+              <th class="text-center">remove</th>
+              </tr>
+              <tr id='tr_template' style='display: none;'>
+                    <td>
+                      [1]
+                    </td>
+                    <td>
+                      [2]
+                      <input type='hidden' name='[5]' value='[3]'>
+                    </td>
+                    <td>
+                      <input type='radio' name='[6]' value='[7]'/>
+                    </td>
+                    <td class='text-center'>
+                      <button class='btn btn-danger' id='remove_[4]' type='button'>
+                        <i class="fa fa-close"></i>
+                      </button>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+            </table>
+            <!-- END TABLE-->
+      
      </div>
     </div>    
    </div>
@@ -64,7 +99,7 @@ $(document).ready(function(){
       success:function(data)
         {
           $('#total_records').text(data.total_data);
-          var list_id = [];
+
           $("#table-search > tbody > tr").remove();
           var table = document.getElementById("table-search").getElementsByTagName('tbody')[0];
           
@@ -72,7 +107,7 @@ $(document).ready(function(){
           for(var i = 0 ; i < data.data.length; i++)
           {
             var item = data.data[i];
-            var tr_template = $("thead").children()[1].outerHTML;
+            var tr_template = $("#table-search > thead").children()[1].outerHTML;
             
             // replace string
             tr_template = tr_template.replace('[1]', item.user_id);
@@ -82,8 +117,8 @@ $(document).ready(function(){
             tr_template = tr_template.replace("id='tr_template' style='display: none;'", "");
 
             // add to tbody
-            $("tbody").append(tr_template);
-            $("tbody tr:last").removeAttr('id').css('display', 'table-row');
+            $("#table-search > tbody").append(tr_template);
+            $("#table-search > tbody tr:last").removeAttr('id').css('display', 'table-row');
           
 
             $('#mem_'+ i +'').click(function(){
@@ -109,19 +144,33 @@ $(document).ready(function(){
 
   function reRenderListMember()
   {
-    listSelectMember.innerHTML = "";
-    $("#selectedMember").val('');
-    
+    // listSelectMember.innerHTML = "";
+    // $("#selectedMember").val('');
+    $("#table-member > tbody > tr").remove();
+
     selectMemberArray.forEach(function(item, index) {
-      listSelectMember.innerHTML =  listSelectMember.innerHTML + "<li class='click_me' index='"+index+"'>" + item.first_name + " " + item.last_name + "</li>";
+
+      var tr_template = $("#table-member > thead").children()[1].outerHTML;
+            
+            // replace string
+            tr_template = tr_template.replace('[1]', item.user_id);
+            tr_template = tr_template.replace('[2]', item.first_name + " " + item.last_name);
+            tr_template = tr_template.replace('[3]', item.user_id);
+            tr_template = tr_template.replace('[4]', index);
+            tr_template = tr_template.replace('[5]', 'member_id[]');
+            tr_template = tr_template.replace('[6]', 'position');
+            tr_template = tr_template.replace('[7]', item.user_id);
+
+            // add to tbody
+            $("#table-member > tbody").append(tr_template);
+            $("#table-member > tbody tr:last").removeAttr('id').css('display', 'table-row');
       
-      $(".click_me").click(function() {
-          var index = $(this).attr('index');
+      $("#remove_" + index).click(function() {
+          var index = $(this).attr('id').replace("#remove_");
           selectMemberArray.splice(index, 1);
           reRenderListMember();
       });
-    
-      $("#selectedMember").val($("#selectedMember").val() + item.user_id + ",");
+
     });
 
   }

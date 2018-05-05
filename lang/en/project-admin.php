@@ -178,11 +178,14 @@ return [
         'overview' => 'Project Overview',
         'slug' => 'Slug',
         'updated_at' => 'Updated at',
-        'user-id'   => 'ID',
+        'user-id'   => 'User ID',
         'last-name' => 'Last name',
         'first-name'    => 'First name',
         'choose'        => 'Choose',
         'member'        => 'List member:',
+        'user-name'     => 'User name',
+        'remove'        => 'Remove',
+        'position'      => 'Position'
     ],
 
 

@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\App;
 
 use Foostart\Category\Library\Controllers\FooController;
 use Foostart\Project\Models\Project;
+use Foostart\Project\Models\Project_member;
 use Foostart\Category\Models\Category;
 use Foostart\Project\Validators\ProjectValidator;
 use Foostart\Project\Repositories\SearchUserRepository;
@@ -25,7 +26,9 @@ class ProjectAdminController extends FooController {
 
     public $obj_item = NULL;
     public $obj_category = NULL;
+    public $obj_member = NULL;
     public $statuses = NULL;
+    //public $positions = NULL;
 
     public function __construct() {
 
@@ -33,6 +36,7 @@ class ProjectAdminController extends FooController {
         // models
         $this->obj_item = new Project(array('perPage' => 10));
         $this->obj_category = new Category();
+        $this->obj_member = new Project_member();
 
         // validators
         $this->obj_validator = new ProjectValidator();
@@ -59,11 +63,11 @@ class ProjectAdminController extends FooController {
         ];
 
         $this->data_view['status'] = $this->obj_item->getPluckStatus();
-
+        $this->data_view['position'] = $this->obj_item->getPluckPositions();
         // //set category
         $this->category_ref_name = 'admin/projects';
         $this->statuses = config('package-project.status.list');
-
+       // $this->positions = config('package-project.position.list');
     }
 
     /**
@@ -83,6 +87,7 @@ class ProjectAdminController extends FooController {
             'request' => $request,
             'params' => $params,
             'statuses' => $this->statuses,
+            //'positions' => $this->positions,
         ));
 
         return view($this->page_views['admin']['items'], $this->data_view);
@@ -128,6 +133,7 @@ class ProjectAdminController extends FooController {
             'request' => $request,
             'context' => $context,
             'statuses' => $this->statuses,
+            //'positions' => $this->positions,
         ));
         return view($this->page_views['admin']['edit'], $this->data_view);
     }
@@ -172,9 +178,20 @@ class ProjectAdminController extends FooController {
             // add new item
             } else {
 
+                // insert project first
                 $item = $this->obj_item->insertItem($params);
-
+                
+            
                 if (!empty($item)) {
+
+                    // insert project member
+                    $this->obj_member->insertBulk($item->id, $params['member_id']);
+
+                    // update leader
+                    if (isset($params['position']))
+                    {
+                        $this->obj_item->setProjectLeader($item->id, $params['position']);
+                    }
 
                     //message
                     return Redirect::route($this->root_router.'.edit', ["id" => $item->id])
