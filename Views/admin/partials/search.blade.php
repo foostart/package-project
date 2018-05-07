@@ -2,7 +2,7 @@
 <html>
  <head>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.0/underscore-min.js"></script>
  </head>
  <body>
   <br />
@@ -44,47 +44,83 @@
 
       <!-- TABLE RESULT SEARCH -->
       <h5 align="center">List member</h5>
-            <table class="table table-striped table-bordered" id="table-member">
-            <thead>
-              <tr>
-              <th>{!! trans('project-admin.fields.user-id') !!}</th>
-              <th>user</th>
-              <th>leader</th>
-              <th class="text-center">remove</th>
-              </tr>
-              <tr id='tr_template' style='display: none;'>
-                    <td>
-                      [1]
-                    </td>
-                    <td>
-                      [2]
-                      <input type='hidden' name='[5]' value='[3]'>
-                    </td>
-                    <td>
-                      <input type='radio' name='[6]' value='[7]'/>
-                    </td>
-                    <td class='text-center'>
-                      <button class='btn btn-danger' id='remove_[4]' type='button'>
-                        <i class="fa fa-close"></i>
-                      </button>
-                    </td>
-                </tr>
-            </thead>
-            <tbody>
-                
-            </tbody>
-            </table>
-            <!-- END TABLE-->
+    
+      <table class="table table-striped table-bordered" id="table-member">
+      <thead>
+        <tr>
+        <th>{!! trans('project-admin.fields.user-id') !!}</th>
+        <th>{!! trans('project-admin.fields.user-name') !!}</th>
+        <th>{!! trans('project-admin.fields.leader') !!}</th>
+        <th class="text-center">{!! trans('project-admin.fields.remove') !!}</th>
+        </tr>
+        <tr id='tr_template' style='display:none;'>
+              <td>
+                [1]
+              </td>
+              <td>
+                [2]
+                <input type='hidden' name='[5]' value='[3]'>
+              </td>
+              <td>
+                <input type='radio' name='[6]' value='[7]'/>
+              </td>
+              <td class='text-center'>
+                <button class='btn btn-danger' id='remove_[4]' type='button'>
+                  <i class="fa fa-close"></i>
+                </button>
+              </td>
+            
+          </tr>
+        
+      </thead>
+      <tbody>
+      @if (isset($members))
+        @foreach($members as $i => $row)
+            <tr>
+                <td>{{$row->user_id}}</td>
+                <td>{{$row->UserProfile->first_name . " " . $row->UserProfile->last_name}}</td>
+                <td>
+                  <input type='radio' name='position' value='{{$row->user_id}}' 
+                    {{isset($item) && $row->user_id == $item->leader ? 'checked':''}} />
+                </td>
+                <td class='text-center'>
+                  <button class='btn btn-danger' id='remove_{{$i}}' type='button'>
+                    <i class="fa fa-close"></i>
+                  </button>
+                </td>
+            </tr>
+        @endforeach
+      @endif
+      </tbody>
+      </table>
+      <!-- END TABLE-->
       
      </div>
     </div>    
    </div>
  </body>
 </html>
+<?php
+// solving data
+$jsonMember = [];
+if (isset($members))
+{
+  foreach ($members as $mem)
+  {
+    $data = [
+        'first_name' =>   $mem->UserProfile->first_name,
+        'last_name' => $mem->UserProfile->last_name,
+        'user_id' => $mem->user_id,
+    ];
+    
+    $jsonMember[] = $data;
+  }
+}
 
+?>
 <script>
   var listSearch = [];
-  var selectMemberArray = [];
+  var selectMemberArray = {!! json_encode($jsonMember) !!};
 
 $(document).ready(function(){
   var listSelectMember = document.getElementById('listSelectMember');
@@ -125,7 +161,9 @@ $(document).ready(function(){
               // var parents = $(this).parents('tr')
               var item_index = $(this).attr('id').replace('mem_', '');
 
-              if(jQuery.inArray(listSearch[Number(item_index)], selectMemberArray) === -1) {
+              var existed = _.where(selectMemberArray, {user_id: listSearch[Number(item_index)].user_id});
+
+              if(existed.length <= 0) {
                 selectMemberArray.push(listSearch[Number(item_index)]);
                 reRenderListMember();
               }
@@ -158,7 +196,7 @@ $(document).ready(function(){
             tr_template = tr_template.replace('[3]', item.user_id);
             tr_template = tr_template.replace('[4]', index);
             tr_template = tr_template.replace('[5]', 'member_id[]');
-            tr_template = tr_template.replace('[6]', 'position');
+            tr_template = tr_template.replace('[6]', 'leader');
             tr_template = tr_template.replace('[7]', item.user_id);
 
             // add to tbody

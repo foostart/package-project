@@ -20,7 +20,7 @@ class Project_member extends FooModel {
     public function setConfigs() {
 
         //table name
-        $this->table = 'project_user';
+        $this->table = 'project_member';
 
         //list of field in table
         $this->fillable = [
@@ -106,9 +106,9 @@ class Project_member extends FooModel {
     }
 
     /**
-     * Get a project by {id}
+     * Get a member by {id}
      * @param ARRAY $params list of parameters
-     * @return OBJECT project
+     * @return OBJECT member
      */
     public function selectItem($params = array(), $key = NULL) {
 
@@ -214,27 +214,17 @@ class Project_member extends FooModel {
      * @param INT $id is primary key
      * @return type
      */
-    public function updateItem($params = [], $id = NULL) {
+    public function updateItem($project_id, $arrUserID) {
 
-        if (empty($id)) {
-            $id = $params['id'];
-        }
-        $field_status = $this->field_status;
-       
-        $project = $this->selectItem($params);
- 
-        if (!empty($project)) {
-            $dataFields = $this->getDataFields($params, $this->fields);
+        Project_member::where('project_id',$project_id)->delete();
+        foreach ($arrUserID as $id)
+        {
+            $data = [
+                'user_id' => $id,
+                'project_id' => $project_id
+            ];
 
-            foreach ($dataFields as $key => $value) {
-                $project->$key = $value;
-            }
-
-            $project->save();
-
-            return $project;
-        } else {
-            return NULL;
+            $this->insertItem($data);
         }
     }
 
@@ -242,7 +232,7 @@ class Project_member extends FooModel {
     /**
      *
      * @param ARRAY $params list of parameters
-     * @return OBJECT project
+     * @return OBJECT member
      */
     public function insertItem($params = []) {
 
@@ -299,21 +289,26 @@ class Project_member extends FooModel {
     }
 
     /**
-     * Get list of statuses to push to select
-     * @return ARRAY list of statuses
+     * @param id of project
+     * @return list member of project
      */
-    public function getPluckStatus() {
-        $pluck_status = config('package-project.status.list');
-        return $pluck_status;
-     }
+    public function getMembersOfProject($project_id)
+    {
+       
+        $members = self::where('project_id',$project_id)
+                    ->select("user_id")
+                    ->with('UserProfile')
+                    ->get();
+        return $members;
+    }
 
     /**
-     * Get list of position to push to select
-     * @return ARRAY list of statuses
+     * Eloquent relationship
+     * 1 user => n project_member
      */
-    public function getPluckPositions() {
-        $pluck_positions = config('package-project.position.list');
-        return $pluck_positions;
+    public function UserProfile()
+    {
+        return $this->hasOne("LaravelAcl\Authentication\Models\UserProfile", "user_id", "user_id");
     }
 
 }

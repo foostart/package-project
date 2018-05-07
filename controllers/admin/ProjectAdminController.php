@@ -103,6 +103,7 @@ class ProjectAdminController extends FooController {
 
         $item = NULL;
         $categories = NULL;
+        $members = NULL;
 
         $params = $request->all();
         $params['id'] = $request->get('id', NULL);
@@ -112,7 +113,7 @@ class ProjectAdminController extends FooController {
         if (!empty($params['id'])) {
 
             $item = $this->obj_item->selectItem($params, FALSE);
-
+            $members = $this->obj_member->getMembersOfProject($item->project_id);
             if (empty($item)) {
                 return Redirect::route($this->root_router.'.list')
                                 ->withMessage(trans($this->plang_admin.'.actions.edit-error'));
@@ -133,6 +134,7 @@ class ProjectAdminController extends FooController {
             'request' => $request,
             'context' => $context,
             'statuses' => $this->statuses,
+            'members'   => $members,
             //'positions' => $this->positions,
         ));
         return view($this->page_views['admin']['edit'], $this->data_view);
@@ -164,6 +166,7 @@ class ProjectAdminController extends FooController {
 
                     $params['id'] = $id;
                     $item = $this->obj_item->updateItem($params);
+                    $this->obj_member->updateItem($item->id, $params['member_id']);
 
                     // message
                     return Redirect::route($this->root_router.'.edit', ["id" => $item->id])
