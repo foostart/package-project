@@ -28,7 +28,8 @@ class ProjectAdminController extends FooController {
     public $obj_category = NULL;
     public $obj_member = NULL;
     public $statuses = NULL;
-    //public $positions = NULL;
+    public $positions = NULL;
+    public $leader_position = NULL;
 
     public function __construct() {
 
@@ -67,7 +68,8 @@ class ProjectAdminController extends FooController {
         // //set category
         $this->category_ref_name = 'admin/projects';
         $this->statuses = config('package-project.status.list');
-       // $this->positions = config('package-project.position.list');
+        $this->positions = config('package-project.position.list');
+        $this->leader_position = $this->positions[10];
     }
 
     /**
@@ -87,7 +89,7 @@ class ProjectAdminController extends FooController {
             'request' => $request,
             'params' => $params,
             'statuses' => $this->statuses,
-            //'positions' => $this->positions,
+            'positions' => $this->positions,
         ));
 
         return view($this->page_views['admin']['items'], $this->data_view);
@@ -135,7 +137,7 @@ class ProjectAdminController extends FooController {
             'context' => $context,
             'statuses' => $this->statuses,
             'members'   => $members,
-            //'positions' => $this->positions,
+            'positions' => $this->positions,
         ));
         return view($this->page_views['admin']['edit'], $this->data_view);
     }
@@ -166,7 +168,7 @@ class ProjectAdminController extends FooController {
 
                     $params['id'] = $id;
                     $item = $this->obj_item->updateItem($params);
-                    $this->obj_member->updateItem($item->id, $params['member_id']);
+                    $this->obj_member->updateItem($item->id, $params['member_id'], $params['position']);
 
                     // message
                     return Redirect::route($this->root_router.'.edit', ["id" => $item->id])
@@ -180,7 +182,7 @@ class ProjectAdminController extends FooController {
 
             // add new item
             } else {
-
+               
                 // insert project first
                 $item = $this->obj_item->insertItem($params);
                 
@@ -188,12 +190,17 @@ class ProjectAdminController extends FooController {
                 if (!empty($item)) {
 
                     // insert project member
-                    $this->obj_member->insertBulk($item->id, $params['member_id']);
+                    $this->obj_member->insertBulk($item->id, $params['member_id'],$params['position']);
 
                     // update leader
-                    if (isset($params['position']))
+                    foreach ($params['position'] as $index => $position_id)
                     {
-                        $this->obj_item->setProjectLeader($item->id, $params['position']);
+                        // if role == leader
+                        if ($this->positions[$position_id] === $this->leader_position)
+                        {
+                            $this->obj_item->setProjectLeader($item->id, $params['member_id'][$index]);
+                            break;
+                        }
                     }
 
                     //message

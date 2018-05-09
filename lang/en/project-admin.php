@@ -185,7 +185,8 @@ return [
         'member'        => 'List member:',
         'user-name'     => 'User name',
         'remove'        => 'Remove',
-        'position'      => 'Position'
+        'position'      => 'Position',
+        'leader'        => 'Leader',
     ],
 
 
@@ -214,6 +215,7 @@ return [
         'member'        => 'Add members',
         'search'        => 'Search User Data',
         'total-data'    => 'Total Data :',
+        'list-member'   => 'List member:'
     ],
 
 

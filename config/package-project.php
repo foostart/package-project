@@ -109,7 +109,7 @@ return [
     'position' => [
         'list' => [
             10 => 'Leader',
-            12 => 'Css',
+            12 => 'CSS',
             32 => 'HTML',
             41 => 'SQL',
         ]

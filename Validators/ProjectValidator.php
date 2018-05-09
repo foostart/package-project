@@ -20,7 +20,7 @@ class ProjectValidator extends FooValidator
             'project_overview' => ["required"],
             'project_description' => ["required"],
             'project_status'       => ["required"],
-            'leader'               => ["required"],
+            'position'               => ["required"],
         ];
 
         // set configs
@@ -41,7 +41,7 @@ class ProjectValidator extends FooValidator
                 'project_overview.required'      => trans($this->lang_admin.'.errors.required', ['attribute' => trans($this->lang_admin.'.fields.overview')]),
                 'project_description.required'   => trans($this->lang_admin.'.errors.required', ['attribute' => trans($this->lang_admin.'.fields.description')]),
                 'project_status.required'        => trans($this->lang_admin.'.errors.required', ['attribute' => trans($this->lang_admin.'.fields.updated_at')]),
-                'leader.required'              => trans($this->lang_admin.'.errors.required', ['attribute' => trans($this->lang_admin.'.fields.leader')]),
+                'position.required'              => trans($this->lang_admin.'.errors.required', ['attribute' => trans($this->lang_admin.'.fields.position')]),
             ];
         });
 

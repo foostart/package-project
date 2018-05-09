@@ -26,6 +26,7 @@ class Project_member extends FooModel {
         $this->fillable = [
             'project_id',
             'user_id',
+            'position',
         ];
 
         //list of fields for inserting
@@ -36,6 +37,10 @@ class Project_member extends FooModel {
             ],
             'user_id' => [
                 'name' => 'user_id',
+                'type' => 'Int',
+            ], 
+            'position' => [
+                'name' => 'position',
                 'type' => 'Int',
             ], 
         ];
@@ -214,14 +219,15 @@ class Project_member extends FooModel {
      * @param INT $id is primary key
      * @return type
      */
-    public function updateItem($project_id, $arrUserID) {
+    public function updateItem($project_id, $arrUserID,$arrPos) {
 
         Project_member::where('project_id',$project_id)->delete();
-        foreach ($arrUserID as $id)
+        foreach ($arrUserID as $index => $id)
         {
             $data = [
                 'user_id' => $id,
-                'project_id' => $project_id
+                'project_id' => $project_id,
+                'position' => $arrPos[$index],
             ];
 
             $this->insertItem($data);
@@ -250,13 +256,14 @@ class Project_member extends FooModel {
 /**
  * 
  */
-    public function insertBulk($project_id, $arrUserID)
+    public function insertBulk($project_id, $arrUserID,$arrPos)
     {
-        foreach ($arrUserID as $id)
+        foreach ($arrUserID as $index => $id)
         {
             $data = [
                 'user_id' => $id,
-                'project_id' => $project_id
+                'project_id' => $project_id,
+                'position'  => $arrPos[$index],
             ];
 
             $this->insertItem($data);
@@ -296,7 +303,7 @@ class Project_member extends FooModel {
     {
        
         $members = self::where('project_id',$project_id)
-                    ->select("user_id")
+                    ->select(['user_id', 'position'])
                     ->with('UserProfile')
                     ->get();
         return $members;

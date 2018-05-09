@@ -43,14 +43,14 @@
       <!-- END TABLE-->
 
       <!-- TABLE RESULT SEARCH -->
-      <h5 align="center">List member</h5>
+      <h5 align="center">{!! trans('project-admin.labels.list-member') !!}</h5>
     
       <table class="table table-striped table-bordered" id="table-member">
       <thead>
         <tr>
         <th>{!! trans('project-admin.fields.user-id') !!}</th>
         <th>{!! trans('project-admin.fields.user-name') !!}</th>
-        <th>{!! trans('project-admin.fields.leader') !!}</th>
+        <th>{!! trans('project-admin.fields.position') !!}</th>
         <th class="text-center">{!! trans('project-admin.fields.remove') !!}</th>
         </tr>
         <tr id='tr_template' style='display:none;'>
@@ -62,7 +62,12 @@
                 <input type='hidden' name='[5]' value='[3]'>
               </td>
               <td>
-                <input type='radio' name='[6]' value='[7]'/>
+              
+                @include('package-project::admin.partials.select_single', [
+                      'name' => '[6]',
+                      'value' => '[7]',
+                      'items' => $positions,
+                  ])
               </td>
               <td class='text-center'>
                 <button class='btn btn-danger' id='remove_[4]' type='button'>
@@ -78,10 +83,17 @@
         @foreach($members as $i => $row)
             <tr>
                 <td>{{$row->user_id}}</td>
-                <td>{{$row->UserProfile->first_name . " " . $row->UserProfile->last_name}}</td>
                 <td>
-                  <input type='radio' name='position' value='{{$row->user_id}}' 
-                    {{isset($item) && $row->user_id == $item->leader ? 'checked':''}} />
+                  {{$row->UserProfile->first_name . " " . $row->UserProfile->last_name}}
+                  <input type='hidden' name='member_id[]' value='{{$row->user_id}}'>
+                </td>
+                <td>
+                  
+                      @include('package-project::admin.partials.select_single', [
+                      'name' => 'position[]',
+                      'value' => $row->position,
+                      'items' => $positions,
+                  ])
                 </td>
                 <td class='text-center'>
                   <button class='btn btn-danger' id='remove_{{$i}}' type='button'>
@@ -196,8 +208,8 @@ $(document).ready(function(){
             tr_template = tr_template.replace('[3]', item.user_id);
             tr_template = tr_template.replace('[4]', index);
             tr_template = tr_template.replace('[5]', 'member_id[]');
-            tr_template = tr_template.replace('[6]', 'leader');
-            tr_template = tr_template.replace('[7]', item.user_id);
+            tr_template = tr_template.replace('[6]', 'position[]');
+            tr_template = tr_template.replace('[7]', '{{ @$params["position"] }}');
 
             // add to tbody
             $("#table-member > tbody").append(tr_template);
