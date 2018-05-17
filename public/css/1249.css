@@ -1,0 +1,86 @@
+a,
+a:hover {
+  text-decoration: none;
+}
+body {
+  overflow-x: hidden;
+}
+.type-1249 {
+  font: normal 16px/24px Varela Round;
+  margin: 0 50px;
+}
+.type-1249 .swiper-button-next,
+.type-1249 .swiper-button-prev {
+  top: 25% !important;
+  background-size: 15px 44px !important;
+}
+.type-1249 h4.quote-summary {
+  margin: 0.6em 50px;
+  text-align: center;
+}
+.type-1249 .quote-text {
+  cursor: pointer;
+  overflow: hidden;
+  text-align: center;
+}
+.type-1249 .quote-text .icon-star-half:before {
+  content: "\e9d8";
+}
+.type-1249 .quote-text .quote-title-wrapper {
+  margin: 0;
+}
+.type-1249 .quote-text .the-title {
+  font-family: inherit;
+  font-size: 15px;
+  color: #6b6b6b;
+  font-weight: 600;
+}
+.type-1249 .quote-text .quote-title {
+  font-size: 10px;
+  text-align: center;
+  line-height: 24px;
+  margin: 0 0 15px 0;
+}
+.type-1249 .quote-text .icon {
+  font-family: "icommon";
+  font-size: 16px;
+  letter-spacing: 1px;
+  line-height: 18.4px;
+  vertical-align: middle;
+  word-spacing: 0px;
+  background-color: #FFFFFF;
+  padding: 0 0 2px 0;
+}
+@font-face {
+  font-family: 'icomoon';
+  font-weight: normal;
+  font-style: normal;
+}
+.rating-stars ul {
+  list-style-type: none;
+  padding: 0;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+.rating-stars ul > li.star {
+  display: inline-block;
+}
+.rating-stars ul > li.star > i.fa {
+  font-size: 1.5em;
+  color: #ccc;
+}
+.rating-stars ul > li.star.hover > i.fa {
+  color: #FFCC36;
+}
+.rating-stars ul > li.star.selected > i.fa {
+  color: #FF912C;
+}
+@media screen and (max-width: 480px) {
+  .type-1249  .quote-text .quote-summary {
+    margin-top: 0;
+    margin-bottom: 0.6em;
+    color: #000000;
+    font: inherit 20px Libre Baskerville;
+    vertical-align: baseline;
+  }
+}

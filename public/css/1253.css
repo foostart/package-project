@@ -1,0 +1,116 @@
+.type-1253 {
+  margin: 50px 0;
+}
+.type-1253 .cheft {
+  position: relative;
+  background-color: #22272d;
+  padding-top: 0.05px;
+  padding-bottom: 0.05px;
+  color: #f4f4f4;
+}
+.type-1253 .cheft .limit-wrapper {
+  z-index: 555;
+  display: block;
+  float: none;
+  margin: auto;
+  max-width: 1260px;
+  width: auto;
+}
+.type-1253 .cheft .limit-wrapper .left {
+  background: url("../images/chef-dark.jpg") center top / auto no-repeat scroll;
+  padding-top: 0.05px;
+  padding-bottom: 0.05px;
+  min-height: 618px;
+  transition: opacity .8s ease-out;
+  opacity: 1;
+}
+.type-1253 .cheft .right {
+  text-align: center;
+}
+.type-1253 .cheft .right .img-banner {
+  margin-top: 30px;
+}
+.type-1253 .cheft .right img {
+  width: 200px;
+  margin: 0 auto;
+}
+.type-1253 .cheft .right h2 {
+  text-align: center;
+  margin-top: 0.6em;
+  margin-bottom: 0.6em;
+  font-size: 60px;
+  font-family: 'Libre Baskerville', serif;
+}
+.type-1253 .cheft .right .font-color {
+  color: #cb7152 !important;
+  font: normal 14px/22px;
+  font-family: 'Handlee', cursive;
+  letter-spacing: 0.3em;
+  margin-bottom: 1.6em;
+}
+.type-1253 .cheft .right .font-color:before,
+.type-1253 .cheft .right .font-color:after {
+  display: inline-block;
+  width: auto;
+  height: 15px;
+  content: "~";
+  font-size: 1.1em;
+  padding: 0px 5px;
+}
+.type-1253 .cheft .right .font-p {
+  font: 16px/24px;
+  font-family: 'Varela Round', sans-serif;
+}
+.type-1253 .cheft .blank-space {
+  display: block;
+  height: 60px;
+}
+.type-1253 .cheft:after {
+  display: block;
+  background: #22272d;
+  height: 26px;
+  content: " ";
+  -webkit-mask-image: url("../images/ornament-bottom.svg");
+  width: 156px;
+  position: absolute;
+  bottom: -25px;
+  left: 50%;
+  margin-left: -78px;
+  z-index: 10;
+}
+.type-1253 .cheft:before {
+  display: block;
+  background: #22272d;
+  height: 26px;
+  content: " ";
+  -webkit-mask-image: url("../images/ornament-top.svg");
+  width: 156px;
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  margin-left: -78px;
+  z-index: 10;
+}
+@media screen and (max-width: 992px) {
+  .type-1253 .cheft .left {
+    display: none;
+  }
+}
+@media screen and (max-width: 768px) and (min-width: 480px) {
+  .type-1253 .cheft .right h2 {
+    font-size: 40px;
+  }
+  .type-1253 .cheft .right im g {
+    width: 150px;
+    height: auto;
+  }
+}
+@media screen and (max-width: 480px) {
+  .type-1253 .cheft .right h2 {
+    font-size: 30px;
+  }
+  .type-1253 .cheft .right img {
+    width: 130px;
+    height: auto;
+  }
+}

@@ -39,6 +39,7 @@ CREATE TABLE `projects` (
   `project_image` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `project_files` varchar(10000) COLLATE utf8_unicode_ci DEFAULT NULL,
   `project_status` tinyint(4) DEFAULT NULL,
+  `leader` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

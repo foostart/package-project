@@ -187,6 +187,7 @@ return [
         'remove'        => 'Remove',
         'position'      => 'Position',
         'leader'        => 'Leader',
+        'status'        => 'Status',
     ],
 
 

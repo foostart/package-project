@@ -10,7 +10,13 @@ Route::get('project', [
     'uses' => 'Foostart\Project\Controllers\Front\ProjectFrontController@index'
 ]);
 
-
+     /**
+     * search
+    */
+    Route::get('about', [
+        'as' => 'projects.home',
+        'uses' => 'Foostart\Project\Controllers\Front\HomeController@index'
+    ]);  
 /**
  * ADMINISTRATOR
  */

@@ -40,7 +40,7 @@ class ProjectValidator extends FooValidator
                 'project_name.required'          => trans($this->lang_admin.'.errors.required', ['attribute' => trans($this->lang_admin.'.fields.name')]),
                 'project_overview.required'      => trans($this->lang_admin.'.errors.required', ['attribute' => trans($this->lang_admin.'.fields.overview')]),
                 'project_description.required'   => trans($this->lang_admin.'.errors.required', ['attribute' => trans($this->lang_admin.'.fields.description')]),
-                'project_status.required'        => trans($this->lang_admin.'.errors.required', ['attribute' => trans($this->lang_admin.'.fields.updated_at')]),
+                'project_status.required'        => trans($this->lang_admin.'.errors.required', ['attribute' => trans($this->lang_admin.'.fields.status')]),
                 'position.required'              => trans($this->lang_admin.'.errors.required', ['attribute' => trans($this->lang_admin.'.fields.position')]),
             ];
         });
